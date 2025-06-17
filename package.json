@@ -1,0 +1,15 @@
+{
+  "name": "ftp-server-for-ladipage",
+  "version": "1.0.0",
+  "description": "Push data from ladipage to server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ftp-srv": "^4.6.3"
+  }
+}
