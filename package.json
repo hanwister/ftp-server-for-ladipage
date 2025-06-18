@@ -6,13 +6,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node index.js"
+    "dev": "node index.js",
+    "start": "pm2 start index.js --name ftp-server-for-ladipage --watch --ignore-watch=\"node_modules\" --interpreter=none"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "ftp-srv": "^4.6.3",
+    "ftpd": "^0.2.16",
     "mkdirp": "^3.0.1"
   }
 }

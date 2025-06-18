@@ -47,6 +47,26 @@ function customFileSystem() {
       } catch {
         return null;
       }
+    },
+
+    // ✅ hỗ trợ LIST thư mục
+    async readdir(pathname) {
+      const fullPath = path.join(ROOT_DIR, pathname);
+      try {
+        return fs.readdirSync(fullPath);
+      } catch (err) {
+        return [];
+      }
+    },
+
+    // ✅ hỗ trợ lệnh PWD
+    async currentDirectory() {
+      return '/';
+    },
+
+    // ✅ hỗ trợ đổi thư mục (CD)
+    async chdir(pathname) {
+      return pathname;
     }
   };
 }
