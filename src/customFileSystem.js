@@ -11,6 +11,7 @@ function customFileSystem() {
     async write(filePath, { stream, client }) {
       const fullPath = path.join(ROOT_DIR, filePath);
       const dir = path.dirname(fullPath);
+      console.log(`[INFO] Đang ghi file: ${fullPath} từ client: ${client.ip}`);
 
       // Tạo thư mục nếu cần
       await mkdirp(dir);
