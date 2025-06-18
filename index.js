@@ -3,6 +3,9 @@ import fs from "fs";
 import { mkdirp } from "mkdirp";
 import path from "path";
 import { fileURLToPath } from "url";
+import customFileSystem from "./src/customFileSystem.js";
+
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,50 +25,6 @@ const ROOT_DIR = path.resolve(__dirname, 'uploads');
 // Tạo thư mục nếu chưa tồn tại
 if (!fs.existsSync(ROOT_DIR)) {
   fs.mkdirSync(ROOT_DIR);
-}
-
-function customFileSystem() {
-  return {
-    async write(filePath, { stream, client }) {
-      const fullPath = path.join(ROOT_DIR, filePath);
-      const dir = path.dirname(fullPath);
-
-      // ✅ Tạo thư mục nếu chưa có
-      await mkdirp(dir);
-
-      // ✅ Ghi file như cũ (hoặc xử lý gì đó)
-      const writeStream = fs.createWriteStream(fullPath);
-      stream.pipe(writeStream);
-
-      stream.on('end', () => {
-        console.log(`[OK] File đã lưu tại: ${fullPath}`);
-      });
-
-      stream.on('error', (err) => {
-        console.error('Lỗi khi ghi file:', err);
-        writeStream.destroy();
-      });
-
-      return Promise.resolve(); // báo là đã xử lý xong
-    },
-
-    // Thêm hỗ trợ tạo thư mục
-    async mkdir(pathname) {
-      const fullPath = path.join(ROOT_DIR, pathname);
-      await mkdirp(fullPath);
-    },
-
-    // Thêm kiểm tra thư mục tồn tại (FileZilla sẽ dùng)
-    async stat(pathname) {
-      const fullPath = path.join(ROOT_DIR, pathname);
-      try {
-        const stats = fs.statSync(fullPath);
-        return stats;
-      } catch {
-        return null;
-      }
-    }
-  };
 }
 
 // Xác thực user đăng nhập
